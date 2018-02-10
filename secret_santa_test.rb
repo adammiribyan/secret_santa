@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './secret_santa'
+require 'byebug'
 
 class CommunityTest < Minitest::Test
   def setup
@@ -27,6 +28,14 @@ class CommunityTest < Minitest::Test
   def test_that_oneself_and_partner_cannot_be_santas
     18.times do
       refute_includes @giftee_with_partner.forbidden_gifters, @community.secret_santa_for(@giftee_with_partner).values.last
+    end
+  end
+
+  def test_that_santas_are_not_duplicated_nor_neglected
+    18.times do
+      assigned_santas = @community.secret_santas.keys
+      assert_equal 9, assigned_santas.count
+      assert_equal assigned_santas.count, assigned_santas.uniq.count
     end
   end
 end
