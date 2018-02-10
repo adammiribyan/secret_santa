@@ -58,7 +58,7 @@ class Community
   end
 
   def secret_santas
-    # Tha last #reduce calls transforms an array of hashes into a single hash.
+    # Tha #reduce call transforms an array of hashes into a single hash.
     santas = @people.map { |person| secret_santa_for(person) }.reduce({}, :merge)
     self.class.store.transaction { self.class.store[:santas] = santas }
     santas
